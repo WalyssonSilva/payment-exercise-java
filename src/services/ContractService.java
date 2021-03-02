@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import entities.Contract;
+import entities.Installment;
 
 public class ContractService {
 
@@ -18,7 +19,8 @@ public class ContractService {
 		for(int i = 1; i <= months; i++) {
 			double updatedQuota = basicQuota + onlinePaymentService.interest(basicQuota, i);
 			double fullQuota = updatedQuota + onlinePaymentService.paymentFee(updatedQuota);
-			
+			Date dueDate = addMonths(contract.getDate(), i);
+			contract.getInstallments().add(new Installment(dueDate, fullQuota));
 		}
 	}
 	
